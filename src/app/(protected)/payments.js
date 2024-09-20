@@ -116,7 +116,7 @@ export default function Payment() {
     }
   ]);
   const [id, setId] = useState(1);
-  const [date, setDate] = useState(new Date());
+  const [data, setData] = useState(new Date());
   const [viewCalendar, setViewCalendar] = useState(false);
   const [observacao, setObservacao] = useState("");
 
@@ -145,7 +145,7 @@ export default function Payment() {
           style={{ width: "100%" }}
         >
           {
-            sujestoes?.map((item) => {
+            sugestoes?.map((item) => {
               return (<Picker.Item key={item.id} label={item.nome} value={item.id} />
               );
             })
@@ -154,7 +154,7 @@ export default function Payment() {
       </View>
       <View style={styles.inputView}>
         <Text onPress={() => setViewCalendar(true)} style={styles.inputData}>
-          {data.toLocaleDateString().split("T")(0)}
+          {data.toLocaleDateString().split("T")[0]}
         </Text>
         {
           viewCalendar && (

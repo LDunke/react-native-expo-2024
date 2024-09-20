@@ -18,7 +18,7 @@ function CustomDrawerContent(props) {
           marginTop: 20,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#f0f0f0",
+          backgroundColor: "#e0f2f1",
           paddingVertical: 10,
         }}
       >
@@ -28,7 +28,7 @@ function CustomDrawerContent(props) {
           style={{ width: 100, height: 100, borderRadius: 50, margin: 10 }}
         />
         <Text
-          style={{ textAlign: "center", fontSize: 16, fontFamily: "regular" }}
+          style={{ textAlign: "center", fontSize: 16, fontFamily: "regular", color: 'green' }}
         >
           {user?.user?.nome}
         </Text>
@@ -42,7 +42,7 @@ function CustomDrawerContent(props) {
           alignItems: "center",
           height: 50,
           margin: 10,
-          backgroundColor: "#0000ff",
+          backgroundColor: "green",
           borderRadius: 5,
         }}
       >
@@ -62,7 +62,7 @@ const DrawerLayout = () => {
             drawerLabel: "Principal",
             headerTitle: "Principal",
             drawerIcon: () => (
-              <Ionicons name="home-outline" size={20} color="black" />
+              <Ionicons name="home-outline" size={20} color="green" />
             ),
           }}
         />
@@ -71,7 +71,7 @@ const DrawerLayout = () => {
           options={{
             drawerLabel: "Listagem", headerTitle: "Listagem",
             drawerIcon: () => (
-              <Ionicons name="list-outline" size={20} color="black" />
+              <Ionicons name="list-outline" size={20} color="green" />
             ),
           }}
         />
@@ -81,7 +81,7 @@ const DrawerLayout = () => {
             drawerLabel: "Pagamentos",
             headerTitle: "Pagamentos",
             drawerIcon: () => (
-              <Ionicons name="diamond-outline" size={20} color="black" />
+              <Ionicons name="diamond-outline" size={20} color="green" />
             ),
           }}
         />
@@ -89,7 +89,6 @@ const DrawerLayout = () => {
     </GestureHandlerRootView>
   );
 };
-
 
 export default function Layout() {
   return DrawerLayout();
