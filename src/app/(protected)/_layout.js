@@ -23,7 +23,7 @@ function CustomDrawerContent(props) {
         }}
       >
         <Image source={{
-          uri: 'https://www.github.com/LDunke.png',
+          uri: 'https://avatars.githubusercontent.com/u/159555008?s=400&u=4c797ad0deecbc3d32f90c0c3d8ac20dc24f5ab7&v=4',
         }}
           style={{ width: 100, height: 100, borderRadius: 50, margin: 10 }}
         />

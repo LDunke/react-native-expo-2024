@@ -123,7 +123,7 @@ export default function Payment() {
   const handleCalendar = (event, selectedDate) => {
     setViewCalendar(false);
     setData(selectedDate);
-  }
+  };
 
   return (
     <View style={styles.content}>
@@ -139,25 +139,25 @@ export default function Payment() {
         />
       </View>
       <View style={styles.inputView}>
-        <Picker selectedValue={id} onValueChange={(itemValue, index) => {
+        <Picker 
+        selectedValue={id} 
+        onValueChange={(itemValue, index) => {
           setId(itemValue);
         }}
           style={{ width: "100%" }}
         >
-          {
-            sugestoes?.map((item) => {
-              return (<Picker.Item key={item.id} label={item.nome} value={item.id} />
+          {sugestoes?.map((item) => {
+              return (
+              <Picker.Item key={item.id} label={item.nome} value={item.id} />
               );
-            })
-          }
+            })}
         </Picker>
       </View>
       <View style={styles.inputView}>
         <Text onPress={() => setViewCalendar(true)} style={styles.inputData}>
           {data.toLocaleDateString().split("T")[0]}
         </Text>
-        {
-          viewCalendar && (
+        {viewCalendar && (
             <DateTimePicker
               value={data}
               onChange={handleCalendar}
@@ -165,11 +165,6 @@ export default function Payment() {
               testID="dateTimePicker"
             />
           )}
-
-        <DateTimePicker
-          value={data}
-          onChange={(event, selectedDate) => setData(selectedDate)}
-        />
       </View>
       <View style={styles.inputView}>
         <TextInput
@@ -181,9 +176,9 @@ export default function Payment() {
           />
       </View>
       <View style={styles.contentButtons}>
-        <Button title="Salvar" />
-        <Button title="Continuar" />
-        <Button title="Cancelar" onPress={() => router.back()} />
+        <Button title="Salvar" color="green"/>
+        <Button title="Continuar" color="green"/>
+        <Button title="Cancelar" onPress={() => router.back()} color="green" />
       </View>
     </View>
   );
@@ -192,9 +187,10 @@ export default function Payment() {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 10,
+    backgroundColor: "#e0f2f1",
   },
   inputView: {
     borderColor: "black",
@@ -204,6 +200,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     padding: 10,
+    borderColor: "green",
   },
   contentButtons: {
     flexDirection: "row",

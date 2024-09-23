@@ -20,22 +20,22 @@ export function Banner() {
                 <Image 
                         source={{ uri: 'https://cdn.ultrafarma.com.br/static/produtos/134908/large-638545839550907523-134908_1.jpg' }} 
                         style={styles.image} 
+                        resizeMode="contain"
                     />
-                    <Text style={styles.text}>Banner 1</Text>
                 </View>
                 <View key="2" style={styles.page}>
                 <Image 
                         source={{ uri: 'https://cdn.ultrafarma.com.br/static/produtos/772338/large-637202403852182997-772338_2.png' }} 
-                        style={styles.image2} 
+                        style={styles.image} 
+                        resizeMode="contain"
                     />
-                    <Text style={styles.text}>Banner 2</Text>
                 </View>
                 <View key="3" style={styles.page}>
                 <Image 
                         source={{ uri: 'https://paguemenos.vtexassets.com/arquivos/ids/647014/ibupril-400mg-10-capsulas-principal.jpg?v=638008105714370000' }} 
-                        style={styles.image3} 
+                        style={styles.image} 
+                        resizeMode="contain"
                     />
-                    <Text style={styles.text}>Banner 3</Text>
                 </View>
             </PagerView>
             <View style={styles.bulletContent}>
@@ -94,18 +94,8 @@ const styles = StyleSheet.create({
         color: "green",
     },
     image: {
-        width: 120,
-        height: 70,
-        marginBottom: 10,
-    },
-    image2: {
-        width: 40,
-        height: 70,
-        marginBottom: 10,
-    },
-    image3: {
-        width: 80,
-        height: 40,
-        marginBottom: 10,
+        width: "100%",
+        height: "100%",
+        marginBottom: 5,
     },
 });
