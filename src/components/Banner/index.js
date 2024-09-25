@@ -18,21 +18,21 @@ export function Banner() {
             >
                 <View key="1" style={styles.page}>
                 <Image 
-                        source={{ uri: 'https://cdn.ultrafarma.com.br/static/produtos/134908/large-638545839550907523-134908_1.jpg' }} 
+                        source={ require("../../assets/loratadina.png") }
                         style={styles.image} 
                         resizeMode="contain"
                     />
                 </View>
                 <View key="2" style={styles.page}>
                 <Image 
-                        source={{ uri: 'https://cdn.ultrafarma.com.br/static/produtos/772338/large-637202403852182997-772338_2.png' }} 
+                        source={ require("../../assets/paracetamol.png")} 
                         style={styles.image} 
                         resizeMode="contain"
                     />
                 </View>
                 <View key="3" style={styles.page}>
                 <Image 
-                        source={{ uri: 'https://paguemenos.vtexassets.com/arquivos/ids/647014/ibupril-400mg-10-capsulas-principal.jpg?v=638008105714370000' }} 
+                        source={ require("../../assets/ibupril.png")} 
                         style={styles.image} 
                         resizeMode="contain"
                     />
@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
         color: "green",
     },
     image: {
-        width: "100%",
-        height: "100%",
+        width: 700,
+        height: 250,
         marginBottom: 5,
     },
 });

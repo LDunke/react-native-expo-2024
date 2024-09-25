@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { Alert, BackHandler, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, BackHandler, Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useAuth } from "../hooks/Auth";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -28,6 +28,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      
       <Text style={styles.title}>Bula Eletrônica</Text>
       <FontAwesome6 name="newspaper" size={24} color="green" />
       <View style={styles.inputbox}>
@@ -56,18 +57,17 @@ export default function App() {
         />
       </View>
 
-      <Button
-        style={styles.button}
-        title="Entrar"
-        onPress={handleEntrarSuper}
-        color={'green'}
-      />
-      <Button title="Sobre" onPress={() => router.push("/about")} color={'green'}/>
-      <Button
-        title="Sair do Aplicativo"
-        onPress={() => BackHandler.exitApp()}
-        color={'green'}
-      />
+      <TouchableOpacity onPress={handleEntrarSuper} style={styles.button}>
+        <Text style={styles.textbutton}>Entrar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push("/about")} style={styles.button}>
+        <Text style={styles.textbutton}>Sobre</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => BackHandler.exitApp()} style={styles.button}>
+        <Text style={styles.textbutton}>Sair</Text>
+      </TouchableOpacity>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -100,7 +100,17 @@ const styles = StyleSheet.create({
     color: 'green',
   },
   button: {
-    width: "100%",
+    backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 5,
+    alignSelf: 'center',
+    margin: 5,
+    width: 200,
   },
+  textbutton: {
+    color: 'white',
+    alignSelf: 'center',
+  },
+  
 
 });
