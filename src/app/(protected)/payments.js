@@ -4,8 +4,10 @@ import { Button, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, Vi
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { z } from "zod";
-import {useAuth} from "../../hooks/Auth/index"
+import { set, z } from "zod";
+import { useAuth } from "../../hooks/Auth/index";
+import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
+import { useUsersDatabase } from "../../database/useUsersDatabase";
 
 const paymentSchema = z.object({
   valor_pago: z.number().gt(0),
@@ -17,120 +19,15 @@ const paymentSchema = z.object({
 
 export default function Payment() {
   const [valor, setValor] = useState("0,00");
-  const [sugestoes, setSugestoes] = useState([
-    {
-      "id": 1,
-      "nome": "Netti Comport"
-    }, {
-      "id": 2,
-      "nome": "Eden Lambot"
-    }, {
-      "id": 3,
-      "nome": "Tabatha Gazey"
-    }, {
-      "id": 4,
-      "nome": "Brina Beaney"
-    }, {
-      "id": 5,
-      "nome": "Ulrika Brody"
-    }, {
-      "id": 6,
-      "nome": "Alys Bowkley"
-    }, {
-      "id": 7,
-      "nome": "Sharyl Allam"
-    }, {
-      "id": 8,
-      "nome": "Kristopher Faye"
-    }, {
-      "id": 9,
-      "nome": "Kristy Tenpenny"
-    }, {
-      "id": 10,
-      "nome": "Archibold Wheater"
-    }, {
-      "id": 11,
-      "nome": "Agnese Fenelow"
-    }, {
-      "id": 12,
-      "nome": "Renae Gilpillan"
-    }, {
-      "id": 13,
-      "nome": "Shelly Carmody"
-    }, {
-      "id": 14,
-      "nome": "Dulci Bauld"
-    }, {
-      "id": 15,
-      "nome": "Kori Hucklesby"
-    }, {
-      "id": 16,
-      "nome": "Layne Summerlie"
-    }, {
-      "id": 17,
-      "nome": "Karole Reek"
-    }, {
-      "id": 18,
-      "nome": "Valaria Itzhak"
-    }, {
-      "id": 19,
-      "nome": "Regen Croker"
-    }, {
-      "id": 20,
-      "nome": "Sara-ann Portlock"
-    }, {
-      "id": 21,
-      "nome": "Alyosha Wanstall"
-    }, {
-      "id": 22,
-      "nome": "Ezequiel Hopkyns"
-    }, {
-      "id": 23,
-      "nome": "Carlo Lufkin"
-    }, {
-      "id": 24,
-      "nome": "Desmund Cornhill"
-    }, {
-      "id": 25,
-      "nome": "Ashly Stilling"
-    }, {
-      "id": 26,
-      "nome": "Shell Louthe"
-    }, {
-      "id": 27,
-      "nome": "Humfried Membry"
-    }, {
-      "id": 28,
-      "nome": "Kariotta Montgomery"
-    }, {
-      "id": 29,
-      "nome": "Derrik Dand"
-    }, {
-      "id": 30,
-      "nome": "Edgar Gotmann"
-    }, {
-      "id": 31,
-      "nome": "Noel Swyn"
-    }, {
-      "id": 32,
-      "nome": "Christina Keepe"
-    }, {
-      "id": 33,
-      "nome": "Josepha Pohl"
-    }, {
-      "id": 34,
-      "nome": "Lucio Goggins"
-    }, {
-      "id": 35,
-      "nome": "Sanderson Legge"
-    }
-  ]);
+  const [sugestoes, setSugestoes] = useState([]);
   const [id, setId] = useState(1);
   const [data, setData] = useState(new Date());
   const [viewCalendar, setViewCalendar] = useState(false);
   const [observacao, setObservacao] = useState("");
   const valueRef = useRef();
-  const {user} = useAuth()
+  const { user } = useAuth();
+  const { createPayment } = usePaymentsDatabase();
+  const { getAllUsers } = useUsersDatabase();
 
   const handleCalendar = (event, selectedDate) => {
     setViewCalendar(false);
@@ -138,7 +35,16 @@ export default function Payment() {
   };
 
   useEffect(() => {
-    valueRef?.current?.focus();
+    (async () => {
+      valueRef?.current?.focus();
+      try {
+        const users = await getAllUsers();
+        setSugestoes(users);
+        setId(users[0].id);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   }, []);
 
   const handleChangeValor = (value) => {
@@ -184,7 +90,13 @@ export default function Payment() {
 
     try {
       const result = await paymentSchema.parseAsync(payment);
-      console.log(result);
+      const { insertedID } = await createPayment(payment);
+      console.log(insertedID);
+      setValor("0,00");
+      setId(sugestoes[0].id);
+      setData(new Date());
+      setObservacao("");
+      valueRef?.current?.focus();
     } catch (error) {
       console.log(error);
     }
@@ -245,7 +157,7 @@ export default function Payment() {
           />
         </View>
         <View style={styles.contentButtons}>
-          <Button title="Salvar" color="green" onPress={handleSubmit}/>
+          <Button title="Salvar" color="green" onPress={handleSubmit} />
           <Button title="Continuar" color="green" />
           <Button title="Cancelar" onPress={() => router.back()} color="green" />
         </View>
