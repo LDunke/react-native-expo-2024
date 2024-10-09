@@ -18,7 +18,7 @@ export default function About() {
             <Text style={{ fontFamily: 'monospace', fontSize: 16, color: 'green', textAlign: 'center', marginHorizontal: 20, marginBottom: 20 }}>
                 O tema deste app é uma bula eletrônica, onde você pode pesquisar por medicamentos e ver informações sobre eles.
             </Text>
-            <Button title="Voltar" onPress={() => router.replace("/")} color="green" />
+            <Button title="Voltar" onPress={() => router.back()} color="green" />
         </View>
     );
 }
