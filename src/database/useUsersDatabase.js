@@ -31,5 +31,4 @@ export function useUsersDatabase() {
     return {
         authUser,
         getAllUsers,
-    };
-}
+    }; }
