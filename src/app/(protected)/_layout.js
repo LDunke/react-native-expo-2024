@@ -1,10 +1,7 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
 import { Ionicons } from '@expo/vector-icons';
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-} from '@react-navigation/drawer';
+import {DrawerContentScrollView,DrawerItemList,} from '@react-navigation/drawer';
 import { Button, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../../hooks/Auth/index';
 
