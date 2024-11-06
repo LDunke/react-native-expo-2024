@@ -7,7 +7,7 @@ export async function initializeDatabase(database) {
 
             DROP INDEX IF EXISTS idx_users_nome; 
 
-            DROP INDEX IF EXISTS idx_payments_data_pagamento; 
+            DROP INDEX IF EXISTS idx_payments_data_pagamento;
 
             CREATE TABLE IF NOT EXISTS users (
              id INTEGER PRIMARY KEY AUTOINCREMENT,

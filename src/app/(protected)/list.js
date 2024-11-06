@@ -10,6 +10,7 @@ export default function List() {
     async function fetchData() {
         //Vai buscar no banco de dados os pagamentos
         const payments = await getPayments();
+        console.log(payments);
         setData(payments)
     }
 
@@ -18,15 +19,29 @@ export default function List() {
         fetchData()
     }, [])
 
+    renderItem = ({ item }) => (
+        <View style={{ flexDirection: "row", margin: 5 }}>
+            <View style={{ flex: 1 }}>
+                <Text>{item.nome}</Text>
+                <View style={{ flexDirection: "row", justifyContent:"space-around" }}>
+                    <Text>{item.data_pagamento}</Text>
+                    <Text>{item.numero_recibo}</Text>
+                </View>
+            </View>
+            <View>{item.valor_pago}</View>
+        </View>
+    );
+
     return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text>Listagem</Text>
-            <FlashList
-                data={data}
-                renderItem={({ item }) => <Text>{item.id}</Text>}
-                estimatedItemSize={200}
-                style={{ flex: 1 }}
-            />
+        <View style={{ flex: 1 }}>
+            <Text>Pagamentos</Text>
+            <View style={{ flex: 1 }}>
+                <FlashList
+                    data={data}
+                    renderItem={renderItem}
+                    estimatedItemSize={200}
+                />
+            </View>
         </View>
     )
 }
