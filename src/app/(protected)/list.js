@@ -1,23 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
+import { FlashList } from "@shopify/flash-list";
 
 export default function List() {
-    const [payments, setPayments] = useState([
-        {id: 1, user_id: 1},
-        {id: 2, user_id: 2},
-        {id: 3, user_id: 3},
-        {id: 4, user_id: 4},
-    ]);
+    const [data, setData] = useState([])
+    const { getPayments } = usePaymentsDatabase();
+
+    async function fetchData() {
+        //Vai buscar no banco de dados os pagamentos
+        const payments = await getPayments();
+        setData(payments)
+    }
+
+    useEffect(() => {
+        //Execute a primeira fez a busca de dados
+        fetchData()
+    }, [])
+
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#e0f2f1' }}>
-            <View style={{flex: 1}}>
-                <FlatList 
-                data={payments}
-                keyExtractor={item => item.id.toString()}
-                renderItem={({item}) => <Text>{item.user_id}</Text>}
-                />
-            </View>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <Text>Listagem</Text>
+            <FlashList
+                data={data}
+                renderItem={({ item }) => <Text>{item.id}</Text>}
+                estimatedItemSize={200}
+                style={{ flex: 1 }}
+            />
         </View>
-    );
+    )
 }
