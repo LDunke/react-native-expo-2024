@@ -90,10 +90,6 @@ export default function Payment() {
       observacao,
     };
 
-    // console.log("----payment----");
-    // console.log(payment);
-    // return false;
-
     try {
       const result = await paymentSchema.parseAsync(payment);
       payment.valor_pago = new Date(Payment.data_pagamento).toISOString().replace("T", " ").split(".")[0];
