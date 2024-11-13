@@ -27,7 +27,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      
+
       <Text style={styles.title}>Bula Eletrônica</Text>
       <FontAwesome6 name="newspaper" size={24} color="green" />
       <View style={styles.inputbox}>
@@ -61,6 +61,10 @@ export default function App() {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push("about")} style={styles.button}>
         <Text style={styles.textbutton}>Sobre</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => router.push("maintense")} style={styles.button}>
+        <Text style={styles.textbutton}>Banco</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => BackHandler.exitApp()} style={styles.button}>
@@ -110,6 +114,6 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center',
   },
-  
+
 
 });

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
 import { FlashList } from "@shopify/flash-list";
 import { formatCurrencyBRL } from "../../utils/formatCurrent";
@@ -33,21 +33,23 @@ export default function List() {
     }, [])
 
     renderItem = ({ item }) => (
-        <View style={{ flexDirection: "row", margin: 5, margin: 10, padding: 3, backgroundColor: "fff", height: 150 }}>
-            <View style={{ flex: 1, gap: 5 }}>
-                <Text style={{fontFamily:"bold", fontSize: 18, textTransform: "uppercase"}}>{item.nome}</Text>
-                <View style={{ flexDirection: "row", gap: 10 }}>
-                    <Text style={{fontFamily:"regular"}}>{formatDateToBrazilian (item.data_pagamento || new Date())}</Text>
+        <TouchableOpacity style={styles.itemContainer} onPress={() => router.push({
+            pathname: "details",
+            params: { id: item.id }
+        })}>
+            <View style={styles.contentItem}>
+                <Text style={styles.name}>{item.nome}</Text>
+                <View style={styles.contentDate}>
+                    <Text style={{ fontFamily: "regular" }}>{formatDateToBrazilian(item.data_pagamento || new Date())}</Text>
                     <Text>{item.numero_recibo}</Text>
                 </View>
             </View>
-            <View><Text style={{flex: 1, justifyContent: "center", alignItems:"center"}}>{formatCurrencyBRL(item.valor_pago || 0)}</Text></View>
-        </View>
+            <View style={styles.valueContent}><Text style={styles.value}>{formatCurrencyBRL(item.valor_pago || 0)}</Text></View>
+        </TouchableOpacity >
     );
 
     return (
         <View style={{ flex: 1 }}>
-            <Text>Pagamentos</Text>
             <View style={{ flex: 1 }}>
                 <FlashList
                     data={data}
@@ -61,3 +63,49 @@ export default function List() {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    listContainer: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: "#f5f5f5",
+    },
+    itemContainer: {
+        flexDirection: "row",
+        backgroundColor: "white",
+        borderRadius: 10,
+        padding: 10,
+        marginVertical: 8,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 5,
+        height: 75,
+    },
+    contentItem: {
+        flex: 1,
+        gap: 5
+    },
+    contentDate: {
+        flexDirection: "row",
+        gap: 10,
+    },
+    name: {
+        fontFamily: "bold",
+        fontSize: 18,
+        textTransform: "uppercase"
+    },
+    valueContent: {
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    value: {
+        fontFamily: "bold",
+        fontSize: 18,
+    }
+
+})
