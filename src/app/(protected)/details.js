@@ -1,16 +1,19 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { formatDateToBrazilian } from "../../utils/formatData";
+import { formatCurrencyBRL } from "../../utils/formatCurrent";
 
 export default function Details() {
   const { id } = useLocalSearchParams()
   const { getPayment } = usePaymentsDatabase();
+  const [payment, setPayment] = useState({})
 
   const fetchData = async () => {
     try {
-      const payment = await getPayment(id)
-      console.log(payment)
+      const data = await getPayment(id)
+      setPayment(data)
     } catch (error) {
       Alert.alert("Erro ao buscar pagamento")
       console.log(error);
@@ -23,13 +26,12 @@ export default function Details() {
 
   return (
     <View style={style.container}>
-      <Text>Details - {id ? id : "Sem id"}  </Text>
       <View>
-        <Text>Nome</Text>
-        <Text>Data do Pagamento</Text>
-        <Text>Num Recibo</Text>
-        <Text>Valor Pago</Text>
-        <Text>Observação</Text>
+        <Text>Nome: {payment?.nome}</Text>
+        <Text>Data do Pagamento: {formatDateToBrazilian(payment?.data_pagamento)}</Text>
+        <Text>Num Recibo: {payment?.numero_recibo}</Text>
+        <Text>Valor Pago: {formatCurrencyBRL(payment?.valor_pago)}</Text>
+        <Text>Observação: {payment?.observacao}</Text>
       </View>
       <View style={{ flex: 1 }}>
         <Text>Não há imagem cadastrada</Text>
@@ -38,7 +40,7 @@ export default function Details() {
         <Button title="Editar" />
         <Button title="IMAGEM" />
         <Button title="REMOVER IMAGEM" />
-        <Button title="VOLTAR" onPress={() => router.push("List")} />
+        <Button title="VOLTAR" onPress={() => router.push("list")} />
       </View>
     </View>
   );
