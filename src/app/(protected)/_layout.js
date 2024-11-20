@@ -82,6 +82,16 @@ const DrawerLayout = () => {
             ),
           }}
         />
+
+        <Drawer.Screen
+        name="details"
+        options={{
+          unmountOnBlur: true,
+          headerTitle: "Detalhes",
+          drawerItemStyle: {display: "none"},
+        }} 
+        />
+
       </Drawer>
     </GestureHandlerRootView>
   );

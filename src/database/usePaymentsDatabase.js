@@ -44,6 +44,16 @@ export function usePaymentsDatabase() {
         }
     }
 
+    async function getPayment(id) {
+        try {
+            const payment = await database.getFirstAsync(`SELECT p.*, u.nome FROM payments p, users u WHERE u.id = p.user_id AND p.id = ${id}`);
+            return payment;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
 
-    return { createPayment, getPayments };
+
+    return { createPayment, getPayments, getPayment };
 }
