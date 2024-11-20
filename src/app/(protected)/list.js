@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
 import { FlashList } from "@shopify/flash-list";
 import { formatCurrencyBRL } from "../../utils/formatCurrent";
-import { formatDateToBrazilian } from "../../utils/formatData";
+import { formatDateToBrazilian } from "../../utils/formatData"; 
 
 export default function List() {
     const [data, setData] = useState([])
