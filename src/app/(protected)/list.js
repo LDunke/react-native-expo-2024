@@ -7,50 +7,57 @@ import { formatDateToBrazilian } from "../../utils/formatData";
 import { router } from "expo-router";
 
 export default function List() {
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
     const { getPayments } = usePaymentsDatabase();
-    const [page, setPage] = useState(0); //controlar qual página o sistema já carregou
-    const [loading, setLoading] = useState(true); //controlar se está carregando os dados do banco
-    const [hasMore, setHasMore] = useState(true); //controlar se tem mais dados para carregar
+    const [page, setPage] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [hasMore, setHasMore] = useState(true);
 
     async function fetchData() {
+        if (hasMore === false) return;
 
-        if (hasMore === false) return; //se esta flag for falsa, não tem mais dados para carregar
-        console.log(page)
-        setPage(page + 1)
-        //Vai buscar no banco de dados os pagamentos
+        setPage(page + 1);
+
         const payments = await getPayments(page);
 
-        if (payments.length < 5) setHasMore(false) //se retornar menos de 5 registros, não tem mais dados para carregar
-        // console.log(payments);
-        setData([...data, ...payments])
-        setLoading(false)
+        if (payments.length < 5) setHasMore(false);
+
+        setData([...data, ...payments]);
+        setLoading(false);
     }
 
     useEffect(() => {
-        //Execute a primeira fez a busca de dados
-        setPage(0)
-        fetchData()
-    }, [])
+        setPage(0);
+        fetchData();
+    }, []);
 
     renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.itemContainer} onPress={() => router.push({
-            pathname: "details",
-            params: { id: item.id }
-        })}>
+        <TouchableOpacity
+            style={styles.itemContainer}
+            onPress={() =>
+                router.push({
+                    pathname: "details",
+                    params: { id: item.id },
+                })
+            }
+        >
             <View style={styles.contentItem}>
                 <Text style={styles.name}>{item.nome}</Text>
                 <View style={styles.contentDate}>
-                    <Text style={{ fontFamily: "regular" }}>{formatDateToBrazilian(item.data_pagamento || new Date())}</Text>
-                    <Text>{item.numero_recibo}</Text>
+                    <Text style={{ fontFamily: "monospace", color: "green" }}>
+                        {formatDateToBrazilian(item.data_pagamento || new Date())}
+                    </Text>
+                    <Text style={{ fontFamily: "monospace", color: "green" }}>{item.numero_recibo}</Text>
                 </View>
             </View>
-            <View style={styles.valueContent}><Text style={styles.value}>{formatCurrencyBRL(item.valor_pago || 0)}</Text></View>
-        </TouchableOpacity >
+            <View style={styles.valueContent}>
+                <Text style={styles.value}>{formatCurrencyBRL(item.valor_pago || 0)}</Text>
+            </View>
+        </TouchableOpacity>
     );
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "#e0f2f1" }}>
             <View style={{ flex: 1 }}>
                 <FlashList
                     data={data}
@@ -62,14 +69,14 @@ export default function List() {
                 />
             </View>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
     listContainer: {
         flex: 1,
         padding: 10,
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#e0f2f1",
     },
     itemContainer: {
         flexDirection: "row",
@@ -80,7 +87,7 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2
+            height: 2,
         },
         shadowOpacity: 0.1,
         shadowRadius: 5,
@@ -89,24 +96,25 @@ const styles = StyleSheet.create({
     },
     contentItem: {
         flex: 1,
-        gap: 5
+        gap: 5,
     },
     contentDate: {
         flexDirection: "row",
         gap: 10,
     },
     name: {
-        fontFamily: "bold",
+        fontFamily: "monospace",
         fontSize: 18,
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        color: "green",
     },
     valueContent: {
         justifyContent: "center",
         alignItems: "center",
     },
     value: {
-        fontFamily: "bold",
+        fontFamily: "monospace",
         fontSize: 18,
-    }
-
-})
+        color: "green",
+    },
+});

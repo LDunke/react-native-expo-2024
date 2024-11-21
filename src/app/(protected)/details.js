@@ -5,68 +5,84 @@ import { useEffect, useState } from "react";
 import { formatCurrencyBRL } from "../../utils/formatCurrent";
 import { formatDateToBrazilian } from "../../utils/formatData";
 import { usePickImage } from "../../utils/pickImage";
+import { useConfig } from "../../hooks/Config";
 
 export default function Details() {
-  const { id } = useLocalSearchParams()
-  const { getPayment } = usePaymentsDatabase();
-  const [payment, setPayment] = useState({})
-  const { pickImage } = usePickImage()
+  const { id } = useLocalSearchParams();
+  const { getPayment, setImagePayment } = usePaymentsDatabase();
+  const [payment, setPayment] = useState({});
+  const { pickImage } = usePickImage();
+  const { directory } = useConfig();
 
   const fetchData = async () => {
     try {
-      const data = await getPayment(id)
-      // console.log("Data:", data);
-      setPayment(data)
+      const data = await getPayment(id);
+      setPayment(data);
     } catch (error) {
-      Alert.alert("Erro ao buscar pagamento")
+      Alert.alert("Erro ao buscar pagamento");
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   const handlePickImage = async () => {
     try {
       const image = await pickImage();
-      console.log("Image: ", image);
+      if (!image) return;
+      setPayment({ ...payment, imagem: image });
+      await setImagePayment(id, image);
     } catch (error) {
       console.log("handlePickImage: ", error);
-      Alert.alert("Erro ao buscar imagem")
+      Alert.alert("Erro ao buscar imagem");
     }
-  }
+  };
+
+  const handleRemoveImage = async () => {
+    try {
+      setPayment({ ...payment, imagem: "" });
+      await setImagePayment(id, "");
+    } catch (error) {
+      console.log("handleRemoveImage: ", error);
+      Alert.alert("Erro ao Remover imagem");
+    }
+  };
 
   return (
-    <View style={style.container}>
+    <View style={styles.container}>
       <View>
-        <Text style={style.text}>Nome: {payment?.nome}</Text>
-        <Text style={style.text}>Data do Pagamento: {formatDateToBrazilian(payment?.data_pagamento || new Date())}</Text>
-        <Text style={style.text}>Num Recibo: {payment?.numero_recibo}</Text>
-        <Text style={style.text}>Valor Pago: {formatCurrencyBRL(payment?.valor_pago || 0)}</Text>
-        <Text style={style.text}>Observação: {payment?.observacao}</Text>
+        <Text style={styles.text}>Nome: {payment?.nome}</Text>
+        <Text style={styles.text}>
+          Data do Pagamento: {formatDateToBrazilian(payment?.data_pagamento || new Date())}
+        </Text>
+        <Text style={styles.text}>Num Recibo: {payment?.numero_recibo}</Text>
+        <Text style={styles.text}>Valor Pago: {formatCurrencyBRL(payment?.valor_pago || 0)}</Text>
+        <Text style={styles.text}>Observação: {payment?.observacao}</Text>
       </View>
-      <View style={style.contentImage}>
-        {
-          !!payment?.imagem ? (
-            <Image source={{ uri: payment?.imagem }} style={{ width: 200, height: 200 }} />
-          ) : <Text>Não há imagem cadastrada</Text>
-        }
+      <View style={styles.contentImage}>
+        {!!payment?.imagem ? (
+          <Image source={{ uri: `${directory}/${payment?.imagem}` }} style={styles.image} />
+        ) : (
+          <Text style={styles.text}>Não há imagem cadastrada</Text>
+        )}
       </View>
-      <View style={style.containerButtons}>
-        <Button title="EDITAR" />
-        <Button title="IMAGEM" onPress={handlePickImage} />
-        <Button title="REMOVER IMAGEM" />
-        <Button title="VOLTAR" onPress={() => router.push("list")} />
+      <View style={styles.containerButtons}>
+        <Button title="EDITAR" color="green" />
+        <Button title="IMAGEM" onPress={handlePickImage} color="green" />
+        <Button title="REMOVER IMAGEM" onPress={handleRemoveImage} color="green" />
+        <Button title="VOLTAR" onPress={() => router.push("list")} color="green" />
       </View>
     </View>
   );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: "#e0f2f1",
   },
   containerButtons: {
     flexDirection: "row",
@@ -74,11 +90,19 @@ const style = StyleSheet.create({
   },
   contentImage: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 20,
   },
   text: {
-    fontFamily: "regular",
-    fontSize: 18,
+    fontFamily: "monospace",
+    fontSize: 16,
+    color: "green",
+    marginBottom: 10,
   },
-})
+});

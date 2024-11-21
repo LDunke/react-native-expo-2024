@@ -17,23 +17,23 @@ export function Banner() {
                 onPageSelected={onPageSelected}
             >
                 <View key="1" style={styles.page}>
-                <Image 
-                        source={ require("../../assets/loratadina.png") }
-                        style={styles.image} 
+                    <Image
+                        source={require("../../assets/loratadina.png")}
+                        style={styles.image}
                         resizeMode="contain"
                     />
                 </View>
                 <View key="2" style={styles.page}>
-                <Image 
-                        source={ require("../../assets/paracetamol.png")} 
-                        style={styles.image} 
+                    <Image
+                        source={require("../../assets/paracetamol.png")}
+                        style={styles.image}
                         resizeMode="contain"
                     />
                 </View>
                 <View key="3" style={styles.page}>
-                <Image 
-                        source={ require("../../assets/ibupril.png")} 
-                        style={styles.image} 
+                    <Image
+                        source={require("../../assets/ibupril.png")}
+                        style={styles.image}
                         resizeMode="contain"
                     />
                 </View>
@@ -43,6 +43,7 @@ export function Banner() {
                 <View style={[styles.bullet, page === 1 && styles.activeBullet]}></View>
                 <View style={[styles.bullet, page === 2 && styles.activeBullet]}></View>
             </View>
+            <Text>olá mundo maluco!</Text>
         </View>
     );
 }
