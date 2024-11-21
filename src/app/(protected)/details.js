@@ -15,7 +15,7 @@ export default function Details() {
   const fetchData = async () => {
     try {
       const data = await getPayment(id)
-     // console.log("Data:", data);
+      // console.log("Data:", data);
       setPayment(data)
     } catch (error) {
       Alert.alert("Erro ao buscar pagamento")
@@ -25,12 +25,12 @@ export default function Details() {
 
   useEffect(() => {
     fetchData()
-  },[])
+  }, [])
 
   const handlePickImage = async () => {
     try {
-      const image = await pickImage()
-      console.log("Image: ", image.URI);
+      const image = await pickImage();
+      console.log("Image: ", image);
     } catch (error) {
       console.log("handlePickImage: ", error);
       Alert.alert("Erro ao buscar imagem")
@@ -49,13 +49,13 @@ export default function Details() {
       <View style={style.contentImage}>
         {
           !!payment?.imagem ? (
-            <Image source={{uri: payment?.imagem}} style={{width: 200, height: 200}} />
+            <Image source={{ uri: payment?.imagem }} style={{ width: 200, height: 200 }} />
           ) : <Text>Não há imagem cadastrada</Text>
         }
       </View>
       <View style={style.containerButtons}>
         <Button title="EDITAR" />
-        <Button title="IMAGEM" onPress={handlePickImage}/>
+        <Button title="IMAGEM" onPress={handlePickImage} />
         <Button title="REMOVER IMAGEM" />
         <Button title="VOLTAR" onPress={() => router.push("list")} />
       </View>
@@ -72,13 +72,13 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  contentImage:{
+  contentImage: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text:{
-    fontFamily:"regular",
+  text: {
+    fontFamily: "regular",
     fontSize: 18,
   },
 })
