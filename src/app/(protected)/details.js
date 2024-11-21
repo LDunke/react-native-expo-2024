@@ -1,14 +1,16 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Button, Image, StyleSheet, Text, View } from "react-native";
 import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
 import { useEffect, useState } from "react";
 import { formatCurrencyBRL } from "../../utils/formatCurrent";
 import { formatDateToBrazilian } from "../../utils/formatData";
+import { usePickImage } from "../../utils/pickImage";
 
 export default function Details() {
   const { id } = useLocalSearchParams()
   const { getPayment } = usePaymentsDatabase();
   const [payment, setPayment] = useState({})
+  const { pickImage } = usePickImage()
 
   const fetchData = async () => {
     try {
@@ -24,6 +26,16 @@ export default function Details() {
   useEffect(() => {
     fetchData()
   },[])
+
+  const handlePickImage = async () => {
+    try {
+      const image = await pickImage()
+      console.log("Image: ", image.URI);
+    } catch (error) {
+      console.log("handlePickImage: ", error);
+      Alert.alert("Erro ao buscar imagem")
+    }
+  }
 
   return (
     <View style={style.container}>
@@ -43,7 +55,7 @@ export default function Details() {
       </View>
       <View style={style.containerButtons}>
         <Button title="EDITAR" />
-        <Button title="IMAGEM" />
+        <Button title="IMAGEM" onPress={handlePickImage}/>
         <Button title="REMOVER IMAGEM" />
         <Button title="VOLTAR" onPress={() => router.push("list")} />
       </View>
