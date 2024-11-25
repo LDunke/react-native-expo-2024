@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
 import PagerView from "react-native-pager-view";
+import { router } from "expo-router";
+
 
 export function Banner() {
     const [page, setPage] = useState(0);
@@ -8,7 +10,6 @@ export function Banner() {
     const onPageSelected = (e) => {
         setPage(e.nativeEvent.position);
     };
-
     return (
         <View style={styles.container}>
             <PagerView
@@ -43,7 +44,30 @@ export function Banner() {
                 <View style={[styles.bullet, page === 1 && styles.activeBullet]}></View>
                 <View style={[styles.bullet, page === 2 && styles.activeBullet]}></View>
             </View>
-            <Text>olá mundo maluco!</Text>
+            <Text style={styles.textPrincipal}> Remédios </Text>
+            <View style={{ justifyContent: 'center', alignItems: 'flex-end', backgroundColor: '#e0f2f1' }}>
+
+                <Image
+                    source={require("../../assets/atenolol.png")}
+                    style={styles.image2}
+                    resizeMode="contain"
+                />
+                <Text style={{ fontFamily: 'monospace', fontSize: 16, color: 'green', marginHorizontal: 10, marginBottom: 20, alignItems: 'flex-end' }}>
+                    Informações sobre o medicamento: Atenolol
+                    Excipientes: carbonato de magnésio, amido, gelatina, laurilsulfato de sódio,
+                    amidoglicolato de sódio e estearato de magnésio.
+                    Cada comprimido de atenolol 50 mg contém: atenolol
+                </Text>
+
+            </View>
+
+
+
+
+            {/* <TouchableOpacity onPress={() => router.push("/bulas")} style={styles.button}>
+                <Text style={styles.textbutton}>Bulas</Text>
+            </TouchableOpacity>  */}
+            {/* CTRL+K+C PARA COMENTAR */}
         </View>
     );
 }
@@ -98,5 +122,29 @@ const styles = StyleSheet.create({
         width: 700,
         height: 250,
         marginBottom: 5,
+    },
+    image2: {
+        width: 700,
+        height: 250,
+    },
+    button: {
+        backgroundColor: 'green',
+        padding: 10,
+        borderRadius: 5,
+        alignSelf: 'center',
+        margin: 5,
+        width: 200,
+    },
+    textbutton: {
+        color: 'white',
+        alignSelf: 'center',
+    },
+    textPrincipal: {
+        fontSize: 24,
+        fontWeight: "bold",
+        color: "green",
+        fontFamily: 'monospace',
+        marginBottom: 10,
+        alignSelf: 'center',
     },
 });
