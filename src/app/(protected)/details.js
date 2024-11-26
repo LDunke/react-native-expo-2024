@@ -65,14 +65,14 @@ export default function Details() {
         {!!payment?.imagem ? (
           <Image source={{ uri: `${directory}/${payment?.imagem}` }} style={styles.image} />
         ) : (
-          <Text style={styles.text}>Não há imagem cadastrada</Text>
+          <Text style={styles.text}>Não há imagem cadastrada</Text> 
         )}
       </View>
       <View style={styles.containerButtons}>
-        <Button title="EDITAR" color="green" />
-        <Button title="IMAGEM" onPress={handlePickImage} color="green" />
-        <Button title="REMOVER IMAGEM" onPress={handleRemoveImage} color="green" />
-        <Button title="VOLTAR" onPress={() => router.push("list")} color="green" />
+        <Button title="EDITAR" color="green"  />
+        <Button title="IMAGEM" onPress={handlePickImage} color="green"  />
+        <Button title="REMOVER IMAGEM" onPress={handleRemoveImage} color="green"  />
+        <Button title="VOLTAR" onPress={() => router.push("list")} color="green"  />
       </View>
     </View>
   );

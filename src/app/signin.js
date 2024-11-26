@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/Auth";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6'; 
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 export default function App() {
   const { signIn, signOut } = useAuth();
@@ -28,17 +28,23 @@ export default function App() {
   return (
     <View style={styles.container}>
 
-      <Text style={styles.title}>Bula Eletrônica</Text>
-      <FontAwesome6 name="newspaper" size={24} color="green" />
-      <View style={styles.inputbox}>
+      <Image
+        source={require("../assets/logo4.png")}
+        style={styles.image2}
+        resizeMode="contain"
+      />
+
+      {/* <Text style={styles.title}>Bula Eletrônica</Text>
+      <FontAwesome6 name="newspaper" size={24} color="green" /> */}
+      <View style={styles.inputbox}> 
         <Ionicons name="mail-open-outline" size={20} color="green" />
         <TextInput
           style={styles.emailinput}
           placeholder="E-mail"
           value={email}
           onChangeText={setEmail}
-        />
-      </View>
+        /> 
+      </View> 
       <View style={styles.inputbox}>
         <Ionicons name="lock-closed-outline" size={20} color="green" />
         <TextInput

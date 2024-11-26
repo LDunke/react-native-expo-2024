@@ -8,7 +8,15 @@ export default function About() {
                 source={{
                     uri: 'https://avatars.githubusercontent.com/u/159555008?s=400&u=4c797ad0deecbc3d32f90c0c3d8ac20dc24f5ab7&v=4',
                 }}
-                style={{ width: 100, height: 100, borderRadius: 50, marginBottom: 20 }} 
+                style={{
+                    width: 150,
+                    height: 150,
+                    borderRadius: 100,
+                    marginBottom: 20,
+                    resizeMode: "contain",
+                    borderWidth: 3,  // Espessura da borda
+                    borderColor: 'green',  // Cor da borda
+                }} 
             />
             <Text style={{ fontFamily: 'monospace', fontSize: 24, color: 'green', marginBottom: 10 }}>Sobre mim</Text>
             <Text style={{ fontFamily: 'monospace', fontSize: 16, color: 'green', textAlign: 'center', marginHorizontal: 20, marginBottom: 20 }}>
@@ -16,7 +24,7 @@ export default function About() {
             </Text>
             <Text style={{ fontFamily: 'monospace', fontSize: 24, color: 'green', marginBottom: 10 }}>Sobre o Projeto</Text>
             <Text style={{ fontFamily: 'monospace', fontSize: 16, color: 'green', textAlign: 'center', marginHorizontal: 20, marginBottom: 20 }}>
-                O tema deste app é uma bula eletrônica, onde você pode pesquisar por medicamentos e ver informações sobre eles.
+                O tema deste app é uma bula eletrônica, onde você pode procurar por medicamentos e ver informações sobre eles.
             </Text>
             <Button title="Voltar" onPress={() => router.back()} color="green" />
         </View>
