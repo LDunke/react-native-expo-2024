@@ -6,6 +6,7 @@ import {
   View,
   Button,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import PagerView from "react-native-pager-view";
 
@@ -70,35 +71,39 @@ export function Banner() {
         />
         <Text
           style={{
-            fontFamily: "monospace",
-            fontSize: 16,
+            fontFamily: "bold",
+            fontSize: 22,
             color: "green",
             marginHorizontal: 10,
             marginBottom: 20,
-            alignItems: "flex-end",
+            alignSelf: "flex-start",
           }}
         >
-          Informações sobre o medicamento: Atenolol Excipientes: carbonato de
-          magnésio, amido, gelatina, laurilsulfato de sódio, amidoglicolato de
-          sódio e estearato de magnésio. Cada comprimido de atenolol 50 mg
-          contém: atenolol
+          Medicamento : Atenolol
         </Text>
 
-        <View style={styles.container2}>
-          {/* Botão para alternar a visibilidade */}
-          <Button
-            color={"green"}
-            title={showView ? "Esconder Bula" : "Ver Bula"}
-            onPress={() => setShowView(!showView)}
-          />
-
-          {/* A View que será exibida ou escondida */}
-          {showView && (
-            <View style={styles.hiddenView}>
-              <Text style={styles.text2}>Aqui está a View!</Text>
-            </View>
-          )}
-        </View>
+        <TouchableOpacity
+          style={[
+            styles.customButton, // Estilo base
+            { backgroundColor: showView ? "#28a745" : "#218838" }, // Cor verde condicional
+          ]}
+          onPress={() => setShowView(!showView)}
+        >
+          <Text style={styles.customButtonText}>
+            {showView ? "Esconder Bula" : "Ver Bula"}
+          </Text>
+        </TouchableOpacity>
+        {/* A View que será exibida ou escondida */}
+        {showView && (
+          <View style={styles.hiddenView}>
+            <Text style={styles.text}>
+              Informações sobre o medicamento: Atenolol Excipientes: carbonato
+              de magnésio, amido, gelatina, laurilsulfato de sódio,
+              amidoglicolato de sódio e estearato de magnésio. Cada comprimido
+              de atenolol 50 mg contém: atenolol
+            </Text>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
@@ -146,8 +151,8 @@ const styles = StyleSheet.create({
     backgroundColor: "green",
   },
   text: {
-    fontSize: 22,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontWeight: "monospace",
     color: "green",
   },
   text2: {
@@ -187,5 +192,21 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#e0e0e0",
     borderRadius: 10,
+    alignItems: "center",
+    alignSelf: "center",
+  },
+  customButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 10,
+    alignSelf: "center",
+  },
+  customButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
