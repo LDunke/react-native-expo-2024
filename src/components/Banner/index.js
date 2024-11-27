@@ -36,22 +36,22 @@ export function Banner() {
       >
         <View key="1" style={styles.page}>
           <Image
-            source={require("../../assets/loratadina.png")}
-            style={styles.image}
+            source={require("../../assets/banner1.png")}
+            style={styles.image3}
             resizeMode="contain"
           />
         </View>
         <View key="2" style={styles.page}>
           <Image
-            source={require("../../assets/paracetamol.png")}
-            style={styles.image}
+            source={require("../../assets/banner2.png")}
+            style={styles.image4}
             resizeMode="contain"
           />
         </View>
         <View key="3" style={styles.page}>
           <Image
-            source={require("../../assets/ibupril.png")}
-            style={styles.image}
+            source={require("../../assets/banner3.png")}
+            style={styles.image4}
             resizeMode="contain"
           />
         </View>
@@ -534,6 +534,16 @@ const styles = StyleSheet.create({
     width: 700,
     height: 250,
     left: 40,
+  },
+  image3: {
+    width: 340,
+    height: 250,
+    marginBottom: 5,
+  },
+  image4: {
+    width: 360,
+    height: 250,
+    marginBottom: 5,
   },
   textPrincipal: {
     fontSize: 24,
